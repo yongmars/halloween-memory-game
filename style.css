@@ -1,0 +1,40 @@
+* { box-sizing: border-box; }
+body { margin: 0; background: #0d1024; color: #fff3d6; font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", system-ui, sans-serif; }
+.halloween-game { position: relative; isolation: isolate; width: 100%; min-height: 100vh; padding: 28px 16px 20px; overflow: hidden; background: radial-gradient(ellipse at 50% 8%, #44255c 0, transparent 55%), radial-gradient(ellipse at 0 90%, #292043 0, transparent 45%), #0d1024; }
+.game-header { text-align: center; margin: 0 auto 18px; }
+.eyebrow { color: #dbc18a; font-size: 10px; letter-spacing: .28em; margin: 0 0 10px; }
+h1 { font-family: Georgia, serif; font-weight: 400; font-size: clamp(30px, 7vw, 44px); line-height: 1.1; margin: 0; color: #ffda89; }
+h1 span { color: #fff1d6; }
+.instructions { font-size: 12px; color: #d4c6de; margin: 12px 0; }
+.progress { display: inline-block; margin: 0; padding: 5px 16px; border: 1px solid #a7864c66; border-radius: 30px; font-size: 14px; color: #dec99d; font-variant-numeric: tabular-nums; }
+#pair-count { font-size: 19px; color: #ffda89; font-weight: 700; }
+.progress-label { margin-left: 4px; font-size: 11px; }
+.card-board { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; width: min(100%, 520px); margin: auto; }
+.memory-card { position: relative; display: block; width: 100%; aspect-ratio: 3 / 4; padding: 0; border: 0; border-radius: 10px; background: transparent; cursor: pointer; perspective: 800px; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+.card-inner { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform .42s ease; border-radius: inherit; box-shadow: 0 5px 12px #0005; }
+.memory-card.is-flipped .card-inner { transform: rotateY(180deg); }
+.card-face { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; overflow: hidden; border-radius: inherit; backface-visibility: hidden; -webkit-backface-visibility: hidden; background: #18132e; }
+.card-front { transform: rotateY(180deg); background: radial-gradient(circle at 50% 35%, #57366b, #1b1632 80%); }
+.card-face img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block; background: #0c0d21; }
+.card-face img[hidden] { display: none; }
+.card-fallback { position: absolute; inset: 4%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; border: 1px solid #e3bd6c; border-radius: 8px; }
+.fallback-icon { font-size: clamp(24px, 7vw, 46px); line-height: 1.15; }
+.fallback-name { font-size: clamp(9px, 2.2vw, 12px); color: #ffe4ad; }
+.card-back .card-fallback { background: radial-gradient(circle, #52335d, #11142c); }
+.memory-card.is-matched { cursor: default; }
+.memory-card.is-matched::after { content: "✓"; position: absolute; right: 4px; bottom: 4px; width: 20px; height: 20px; display: grid; place-items: center; border: 1px solid #f4d48b; border-radius: 50%; background: #233c35; color: #fff1c3; font-size: 12px; pointer-events: none; }
+.memory-card:focus-visible, .play-again:focus-visible { outline: 3px solid #ffe3a2; outline-offset: 4px; }
+.game-status { text-align: center; min-height: 1.5em; font-size: 12px; color: #d4c6de; margin: 18px 0 0; }
+.celebration { position: relative; z-index: 2; width: min(100%, 520px); margin: 20px auto 0; text-align: center; padding: 22px 12px; background: linear-gradient(135deg, #392243, #201a36); border: 1px solid #b89558; border-radius: 16px; }
+.celebration[hidden] { display: none; }
+.clear-decoration { color: #efd18d; font-size: 25px; margin: 0 0 10px; }
+.celebration h2 { color: #ffda89; font-family: Georgia, serif; font-size: clamp(18px, 5vw, 28px); margin: 0; }
+.celebration p:not(.clear-decoration) { font-size: 14px; }
+.play-again { border: 1px solid #ffe5b2; border-radius: 30px; background: #f5c771; color: #25182d; padding: 12px 24px; font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; }
+.play-again span { margin-left: 12px; }
+.game-footer { text-align: center; margin-top: 22px; font: 12px Georgia, serif; color: #b8a2c3; letter-spacing: .07em; }
+.confetti { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 3; }
+.confetti-piece { position: absolute; top: -20px; width: 8px; height: 13px; background: var(--color); left: var(--left); animation: confetti-fall 2.8s var(--delay) ease-in both; }
+@keyframes confetti-fall { from { transform: translateY(-20px) rotate(0); opacity: 1; } to { transform: translateY(var(--fall-distance)) rotate(600deg); opacity: 0; } }
+@media (max-width: 380px) { .halloween-game { padding: 22px 10px 16px; } .card-board { gap: 6px; } .memory-card { border-radius: 7px; } }
+@media (prefers-reduced-motion: reduce) { .card-inner { transition: none; } .confetti { display: none; } }

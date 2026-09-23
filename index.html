@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ja" data-image-base="./image/">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Halloween Memory | Yongmars Library</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="halloween-game" aria-labelledby="game-title">
+    <header class="game-header">
+      <p class="eyebrow">YONGMARS LIBRARY</p>
+      <h1 id="game-title">Halloween <span>Memory</span></h1>
+      <p class="instructions">カードをめくって、同じ絵柄を見つけよう</p>
+      <p class="progress"><span id="pair-count">0</span> / 8 <span class="progress-label">ペア</span></p>
+    </header>
+    <div id="card-board" class="card-board" aria-label="神経衰弱のカード16枚"></div>
+    <p id="game-status" class="game-status" role="status" aria-live="polite">好きなカードを2枚めくってね</p>
+    <section id="celebration" class="celebration" aria-labelledby="clear-title" hidden>
+      <p class="clear-decoration" aria-hidden="true">✦ 🎃 ✦</p>
+      <h2 id="clear-title" tabindex="-1">🎃 Happy Halloween! 🎃</h2>
+      <p>全部そろったね！</p>
+      <button id="play-again" class="play-again" type="button">もう一度あそぶ <span aria-hidden="true">↻</span></button>
+    </section>
+    <footer class="game-footer">✧ Trick or treat, match & repeat ✧</footer>
+    <div id="confetti" class="confetti" aria-hidden="true"></div>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
