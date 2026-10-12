@@ -32,6 +32,51 @@
   let pairs = 0;
   let turnTimer;
   let confettiTimer;
+  let previewTimer;
+  let previewCard = null;
+  const preview = document.createElement("dialog");
+  preview.className = "pair-preview";
+  preview.setAttribute("aria-label", "そろったペアの絵柄。タップして閉じる");
+  const previewArt = document.createElement("div");
+  previewArt.className = "pair-preview-art";
+  const previewClose = document.createElement("button");
+  previewClose.type = "button";
+  previewClose.className = "pair-preview-close";
+  previewClose.textContent = "タップして閉じる · 2秒で戻る";
+  preview.append(previewArt, previewClose);
+  root.append(preview);
+  function closePreview() {
+    if (!preview.open) return;
+    clearTimeout(previewTimer);
+    preview.close();
+    previewArt.replaceChildren();
+    document.documentElement.classList.remove("pair-preview-open");
+    if (pairs === CARD_IMAGES.length) {
+      celebration.hidden = false;
+      status.textContent = "8組すべて完成！";
+      root.querySelector("#clear-title").focus({ preventScroll: true });
+      celebration.scrollIntoView({ behavior: reducedMotion.matches ? "instant" : "smooth", block: "nearest" });
+      playConfetti();
+    } else {
+      locked = false;
+      previewCard?.focus({ preventScroll: true });
+    }
+    previewCard = null;
+  }
+  preview.addEventListener("click", closePreview);
+  preview.addEventListener("cancel", event => { event.preventDefault(); closePreview(); });
+  function showPair(card) {
+    locked = true;
+    previewCard = card;
+    const item = CARD_IMAGES.find(item => item.id === card.dataset.pair);
+    preview.setAttribute("aria-label", `${item.name}のペアがそろったよ！`);
+    const face = makeFace("preview", item.image, item.emoji, item.name);
+    previewArt.replaceChildren(face);
+    document.documentElement.classList.add("pair-preview-open");
+    preview.showModal();
+    previewClose.focus({ preventScroll: true });
+    previewTimer = window.setTimeout(closePreview, 2000);
+  }
 
   function imageUrl(path) {
     if (!path) return "";
@@ -117,16 +162,8 @@
       pairs++;
       count.textContent = pairs;
       status.textContent = `${card.dataset.name}のペアがそろったよ！`;
-      if (pairs === CARD_IMAGES.length) {
-        locked = true;
-        turnTimer = window.setTimeout(() => {
-          celebration.hidden = false;
-          status.textContent = "8組すべて完成！";
-          root.querySelector("#clear-title").focus({ preventScroll: true });
-          celebration.scrollIntoView({ behavior: reducedMotion.matches ? "instant" : "smooth", block: "nearest" });
-          playConfetti();
-        }, reducedMotion.matches ? 0 : 450);
-      }
+      locked = true;
+      turnTimer = window.setTimeout(() => showPair(card), reducedMotion.matches ? 0 : 450);
     } else {
       locked = true;
       status.textContent = "よく覚えてね…";
@@ -145,6 +182,11 @@
   function startGame(moveFocus = false) {
     clearTimeout(turnTimer);
     clearTimeout(confettiTimer);
+    clearTimeout(previewTimer);
+    if (preview.open) preview.close();
+    previewArt.replaceChildren();
+    previewCard = null;
+    document.documentElement.classList.remove("pair-preview-open");
     first = null;
     locked = false;
     pairs = 0;

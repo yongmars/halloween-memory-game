@@ -1,4 +1,10 @@
 * { box-sizing: border-box; }
+.pair-preview-open { overflow: hidden; }
+.pair-preview { padding: 0; border: 0; background: transparent; color: #ffe4ad; overflow: visible; max-width: none; max-height: none; width: min(88vw, 540px, calc((100dvh - 90px) * .75)); }
+.pair-preview::backdrop { background: #080915e8; }
+.pair-preview-art { position: relative; aspect-ratio: 3 / 4; width: 100%; border-radius: 12px; overflow: hidden; box-shadow: 0 0 35px #edc46b30; }
+.pair-preview-close { display: block; margin: 12px auto 0; padding: 8px 12px; border: 1px solid #c5a66b; border-radius: 24px; background: #241b35; color: #ffe4ad; font: inherit; font-size: 12px; cursor: pointer; }
+.pair-preview-close:focus-visible { outline: 2px solid #ffe4ad; outline-offset: 3px; }
 body { margin: 0; background: #0d1024; color: #fff3d6; font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", system-ui, sans-serif; }
 .halloween-game { position: relative; isolation: isolate; width: 100%; min-height: 100vh; padding: 28px 16px 20px; overflow: hidden; background: radial-gradient(ellipse at 50% 8%, #44255c 0, transparent 55%), radial-gradient(ellipse at 0 90%, #292043 0, transparent 45%), #0d1024; }
 .game-header { text-align: center; margin: 0 auto 18px; }
